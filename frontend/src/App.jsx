@@ -16,8 +16,8 @@ const App = () => {
     <div>
       <BrowserRouter>
       <Routes>
-        <Route path='/Login' element={<Login />} />
-        <Route path='/Sign-Up' element={<SignUp />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/sign-up' element={<SignUp />} />
 
         {/* admin routes */}
         <Route element ={<PrivateRoute allowedRoles = {["admin"]} />}>
