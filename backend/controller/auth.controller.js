@@ -1,20 +1,21 @@
 import User from "../models/user.model.js"
 import bcryptjs from 'bcryptjs'
+import { errorHandler } from "../utils/error.js"
 
-export const signup = async(req,res)=>{
+export const signup = async(req,res,next)=>{
     const {name,email,password,profileImageUrl,adminJoinCode} = req.body
 
     if(
         !name || !email || !password || name==="" || email==="" || password===""
     ){
-        return res.status(400).json({message:"All fields are required"})
+        return next(errorHandler(400, "all fields are required"))
     }
 
     // check if user already exists
     const isAlreadyExist = await User.findOne({email})
 
     if(isAlreadyExist){
-        return res.status(400).json({success:false,message:"User already exists"})
+        return next(errorHandler(400,"User already exists"))
     }
 
     // check user role
@@ -37,6 +38,6 @@ export const signup = async(req,res)=>{
         await newUser.save()
         res.json("Signup successful")
     } catch (error) {
-        res.status(500).json({message:error.message()})
+        next(error.message)
     }
 }
