@@ -1,12 +1,13 @@
 import express from "express"
 import { adminOnly, verifyToken } from "../utils/verifyUser.js"
-import { createTask, deleteTask, getDashboardData, getTasks, getTasksById, updateTask, updateTaskChecklist, updateTaskStatus } from "../controller/task.controller.js"
+import { createTask, deleteTask, getDashboardData, getTasks, getTasksById, updateTask, updateTaskChecklist, updateTaskStatus, userDashboardData } from "../controller/task.controller.js"
 
 const router = express.Router()
 
 router.post("/create",verifyToken,adminOnly,createTask)
 router.get("/",verifyToken,getTasks)
 router.get("/dashboard-data",verifyToken,adminOnly,getDashboardData)
+router.get("/user-dashboard-data",verifyToken,userDashboardData)
 
 router.get("/:id",verifyToken,getTasksById)
 router.put("/:id",verifyToken,updateTask)
